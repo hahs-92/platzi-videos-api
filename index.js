@@ -1,7 +1,13 @@
 const express = require('express')
 const chalk = require('chalk')
 
+//ROUTES
+const moviesApi = require('./routes/movies')
+
+// ____________________________________________________________________________________________
+
 const app = express()
+moviesApi(app)
 
 const { config } = require('./config')
 
