@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "dev": "set DEBUG=app:*&& set NODE_ENV=development && nodemon index",
+    "debug": "DEBUG=express:*,app:* npm run start",
     "start": "set NODE_ENV=production && node index",
     "test": "set NODE_ENV=development && mocha --exit",
     "cover": "nyc npm run test",
-    "report": "nyc report --reporter=html && cd coverage && index.html"
+    "report": "nyc report --reporter=html && cd coverage && index.html",
+    "inspect": "set DEBUG=express:*,app:* && nodemon --inspect index"
   },
   "keywords": [],
   "author": "Hugo Alexander Hernandez Serrano",
