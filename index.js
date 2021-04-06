@@ -1,5 +1,6 @@
 const express = require('express')
 const chalk = require('chalk')
+const cors = require('cors')
 
 //CONFIG
 const { config } = require('./config')
@@ -18,6 +19,9 @@ const app = express()
 
 //MIDDLEWARE PARA RECIBIR JSON
 app.use(express.json())
+
+//CORS
+app.use(cors())
 
 //ROUTES
 moviesApi(app)
