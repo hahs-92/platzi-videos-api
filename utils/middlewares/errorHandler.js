@@ -1,11 +1,14 @@
 const chalk = require('chalk')
+const boom = require('@hapi/boom')
+
+//CONFIG
 const { config } = require('../../config')
 
 
 //ESTA FUNCION NO ES UN MIDDLEWARE
 function withErrorStack(err, stack) {
     if(config.dev) {
-        return { err, stack }
+        return { ...err, stack }
     }
 
     return err
@@ -18,12 +21,25 @@ function logErrors(err, req, res, next) {
     next(err)
 }
 
+//POR SI ALHUN CODIGO ERR QUE VENGA NO ESTE EN BOOM, PARA QUE TODOS TENGAN LA ESTRUCUTURA DE BOOM
+function wrapError(err, req, res, next) {
+    if(!err.isBoom) {
+        next(boom.badImplementation(err))
+    }
+
+    next(err)
+}
+
 function errorHandler(err, req, res, next) {
-    res.status(err.status || 500 )
-    res.json(withErrorStack(err.message,err.stack))
+    const { ouput: { statusCode,payload } } = err
+    // res.status(err.status || 500 )
+    res.status(statusCode)
+    // res.json(withErrorStack(err.message,err.stack))
+    res.json(withErrorStack(err.stack,payload))
 }
 
 module.exports = {
     logErrors,
+    wrapError,
     errorHandler
 }

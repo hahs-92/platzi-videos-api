@@ -5,7 +5,9 @@ const chalk = require('chalk')
 const { config } = require('./config')
 
 //MIDDLEWARES ERROS
-const { logErrors, errorHandler } = require('./utils/middlewares/errorHandler')
+const { logErrors, errorHandler, wrapError } = require('./utils/middlewares/errorHandler')
+
+const notFoundHandler = require('./utils/middlewares/notFoundHandler')
 
 //ROUTES
 const moviesApi = require('./routes/movies')
@@ -19,9 +21,12 @@ app.use(express.json())
 
 //ROUTES
 moviesApi(app)
+//CATCH ERROR 404
+app.use(notFoundHandler)
 
 //MIDDLEWARES ERROS DEBEN IR AL FINAL
 app.use(logErrors)
+app.use(wrapError)
 app.use(errorHandler)
 
 
