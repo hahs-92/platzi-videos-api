@@ -5,7 +5,7 @@ const moviesMock = [
       "year": 2001,
       "cover": "http://dummyimage.com/130x249.png/ff4444/ffffff",
       "description": "Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.",
-      "duration": 1922,
+      "duration": 192,
       "contentRating": "PG-13",
       "source": "https://cbsnews.com/eleifend/pede.png",
       "tags": [
@@ -18,7 +18,7 @@ const moviesMock = [
       "year": 2012,
       "cover": "http://dummyimage.com/143x154.jpg/dddddd/000000",
       "description": "Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.",
-      "duration": 1987,
+      "duration": 197,
       "contentRating": "PG-13",
       "source": "http://census.gov/volutpat.jsp",
       "tags": [

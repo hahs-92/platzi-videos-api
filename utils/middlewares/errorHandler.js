@@ -17,7 +17,7 @@ function withErrorStack(err, stack) {
 //MIDDELWARES ERROS
 
 function logErrors(err, req, res, next) {
-    console.error(chalk.red("[LOG-ERRORS]: ",err.message))
+    console.error(chalk.red("[LOG-ERRORS]: ",err))
     next(err)
 }
 
@@ -31,11 +31,11 @@ function wrapError(err, req, res, next) {
 }
 
 function errorHandler(err, req, res, next) {
-    const { ouput: { statusCode,payload } } = err
+    const { output: { statusCode, payload } } = err
     // res.status(err.status || 500 )
     res.status(statusCode)
     // res.json(withErrorStack(err.message,err.stack))
-    res.json(withErrorStack(err.stack,payload))
+    res.json(withErrorStack(payload, err.stack))
 }
 
 module.exports = {
