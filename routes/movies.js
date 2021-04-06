@@ -6,6 +6,10 @@ const { moviesMock } = require('../utils/mocks/movies')
 //NOS COMUNICAMOS CON LA,CAPA DE SERVICIO
 const MoviesService = require('../services/movies')
 
+//CACHERESPONSE
+const cacheResponse = require('../utils/chacheResponse')
+const { FIVE_MINUTES_IN_SECONDS, SYXTY_MINUTES_IN_SECONDS } = require('../utils/times')
+
 // ________________________________________________________________________________________
 
 function moviesApi(app) {
@@ -28,6 +32,7 @@ function moviesApi(app) {
 
     router.get("/", async (req, res, next) => {
         try {
+            cacheResponse(res, FIVE_MINUTES_IN_SECONDS)
             // throw new Error(chalk.yellow("[ERROR GETALL]"))
             const { tags } = req.query
             // const movies = await Promise.resolve(moviesServices.getMovies({ tags }))
@@ -45,6 +50,7 @@ function moviesApi(app) {
 
     router.get("/:movieId", validationHandler({ movieId: movieIdSchema }, 'params'), async (req, res, next) => {
         try {
+            cacheResponse(res, SYXTY_MINUTES_IN_SECONDS)
             const { movieId } = req.params
             // const movies = await Promise.resolve(moviesServices.getMovie({ movieId }))
             const movies = await moviesServices.getMovie({ movieId })
