@@ -6,6 +6,8 @@ const { moviesMock } = require('../utils/mocks/movies')
 //NOS COMUNICAMOS CON LA,CAPA DE SERVICIO
 const MoviesService = require('../services/movies')
 
+// ________________________________________________________________________________________
+
 function moviesApi(app) {
     const router = express.Router()
     app.use("/api/movies", router)
@@ -23,7 +25,6 @@ function moviesApi(app) {
     //VALIDATIONS
     const validationHandler = require('../utils/middlewares/validateHandler')
 
-// ____________________________________________________________________________________________________
 
     router.get("/", async (req, res, next) => {
         try {

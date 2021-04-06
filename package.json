@@ -4,9 +4,9 @@
   "description": "Api para el proyecto platzi video",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "set DEBUG=app:*&& set NODE_ENV=development && nodemon index",
-    "start": "set NODE_ENV=production && node index"
+    "start": "set NODE_ENV=production && node index",
+    "test": "set NODE_ENV=development && mocha --exit"
   },
   "keywords": [],
   "author": "Hugo Alexander Hernandez Serrano",
@@ -22,6 +22,10 @@
   },
   "devDependencies": {
     "chalk": "^3.0.0",
-    "nodemon": "^2.0.7"
+    "mocha": "^8.3.2",
+    "nodemon": "^2.0.7",
+    "proxyquire": "^2.1.3",
+    "sinon": "^10.0.0",
+    "supertest": "^6.1.3"
   }
 }

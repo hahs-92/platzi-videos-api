@@ -33,7 +33,7 @@ const moviesMock = [
       "year": 1996,
       "cover": "http://dummyimage.com/176x226.bmp/dddddd/000000",
       "description": "Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.",
-      "duration": 1947,
+      "duration": 197,
       "contentRating": "PG",
       "source": "http://auda.org.au/sapien/sapien/non/mi.png",
       "tags": [
@@ -46,7 +46,7 @@ const moviesMock = [
       "year": 1968,
       "cover": "http://dummyimage.com/170x206.jpg/cc0000/ffffff",
       "description": "Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.",
-      "duration": 1955,
+      "duration": 195,
       "contentRating": "R",
       "source": "http://prnewswire.com/aliquam/erat.html",
       "tags": [
@@ -56,7 +56,7 @@ const moviesMock = [
     {
       "id": "8ab2f271-5567-4d78-9fed-88ef660451fe",
       "title": "War and Peace (Voyna i mir)",
-      "year": 2003,
+      "year": 203,
       "cover": "http://dummyimage.com/240x228.png/ff4444/ffffff",
       "description": "Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.",
       "duration": 1953,
@@ -73,7 +73,7 @@ const moviesMock = [
       "year": 2009,
       "cover": "http://dummyimage.com/173x237.jpg/cc0000/ffffff",
       "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.",
-      "duration": 1912,
+      "duration": 192,
       "contentRating": "NC-17",
       "source": "https://1688.com/varius/ut.html",
       "tags": [
@@ -90,7 +90,7 @@ const moviesMock = [
       "year": 2012,
       "cover": "http://dummyimage.com/205x226.bmp/5fa2dd/ffffff",
       "description": "Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.",
-      "duration": 1968,
+      "duration": 198,
       "contentRating": "NC-17",
       "source": "http://amazonaws.com/augue/aliquam/erat/volutpat/in/congue/etiam.png",
       "tags": [
@@ -105,7 +105,7 @@ const moviesMock = [
       "year": 1997,
       "cover": "http://dummyimage.com/153x246.png/cc0000/ffffff",
       "description": "Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.",
-      "duration": 2039,
+      "duration": 239,
       "contentRating": "PG",
       "source": "http://nhs.uk/maecenas/leo/odio/condimentum.jsp",
       "tags": [
@@ -118,7 +118,7 @@ const moviesMock = [
       "year": 1994,
       "cover": "http://dummyimage.com/242x134.jpg/ff4444/ffffff",
       "description": "Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.",
-      "duration": 1935,
+      "duration": 135,
       "contentRating": "G",
       "source": "https://nba.com/sit.png",
       "tags": [
@@ -131,7 +131,7 @@ const moviesMock = [
       "year": 1995,
       "cover": "http://dummyimage.com/167x148.jpg/ff4444/ffffff",
       "description": "Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.",
-      "duration": 1901,
+      "duration": 191,
       "contentRating": "PG-13",
       "source": "http://google.cn/at/turpis/donec/posuere/metus/vitae/ipsum.jsp",
       "tags": [
@@ -140,6 +140,22 @@ const moviesMock = [
     }
   ]
 
+  function filteredMoviesMock(tag) {
+    return moviesMock.filter(movie => movie.tags.includes(tag))
+  }
+
+  class MoviesServiceMock {
+    async getMovies() {
+      return Promise.resolve(moviesMock)
+    }
+
+    async createMovie() {
+      return Promise.resolve(moviesMock[0])
+    }
+  }
+
   module.exports = {
-      moviesMock
+      moviesMock,
+      filteredMoviesMock,
+      MoviesServiceMock
   }
