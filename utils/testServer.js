@@ -1,4 +1,4 @@
-//SERVIDOR DE PRUEBAS
+//SERVIDOR DE PRUEBAS PARA ENDPOINT
 const express = require('express')
 const supertest = require('supertest')
 
