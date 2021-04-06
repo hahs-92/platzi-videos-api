@@ -13,9 +13,21 @@ function moviesApi(app) {
     //INSTANCIAMOS LA CLASE MOVIESERVICES 
     const moviesServices = new MoviesService()
 
+    //SCHEMAS
+    const {
+        movieIdSchema,
+        createMovieSchema,
+        updateMovieSchema
+    } = require('../utils/schema/movies')
+
+    //VALIDATIONS
+    const validationHandler = require('../utils/middlewares/validateHandler')
+
+// ____________________________________________________________________________________________________
+
     router.get("/", async (req, res, next) => {
         try {
-            throw new Error(chalk.yellow("[ERROR GETALL]"))
+            // throw new Error(chalk.yellow("[ERROR GETALL]"))
             const { tags } = req.query
             // const movies = await Promise.resolve(moviesServices.getMovies({ tags }))
             const movies = await moviesServices.getMovies({ tags })
@@ -30,7 +42,7 @@ function moviesApi(app) {
         }
     })
 
-    router.get("/:movieId", async (req, res, next) => {
+    router.get("/:movieId", validationHandler({ movieId: movieIdSchema }, 'params'), async (req, res, next) => {
         try {
             const { movieId } = req.params
             // const movies = await Promise.resolve(moviesServices.getMovie({ movieId }))
@@ -45,7 +57,7 @@ function moviesApi(app) {
         }
     })
 
-    router.post("/", async (req, res, next) => {
+    router.post("/", validationHandler(createMovieSchema), async (req, res, next) => {
         try {
             const { body: movie } = req
             const idMovie = await Promise.resolve(moviesServices.createMovie({ movie }))
@@ -60,7 +72,7 @@ function moviesApi(app) {
         }
     })
 
-    router.put("/:movieId", async (req, res, next) => {
+    router.put("/:movieId",validationHandler({ movieId: movieIdSchema }), validationHandler(updateMovieSchema), async (req, res, next) => {
         try {
             const { movieId } = req.params
             const { body: movie } = req
@@ -79,7 +91,7 @@ function moviesApi(app) {
         }
     })
     
-    router.patch("/:movieId", async (req, res, next) => {
+    router.patch("/:movieId", validationHandler({ movieId: movieIdSchema }, 'params'),  validationHandler(updateMovieSchema), async (req, res, next) => {
         try {
             const { movieId } = req.params
             const { body: movie } = req
@@ -98,7 +110,7 @@ function moviesApi(app) {
         }
     })
 
-    router.delete("/:movieId", async (req, res, next) => {
+    router.delete("/:movieId", validationHandler({ movieId: movieIdSchema }, 'params'), async (req, res, next) => {
         try {
             const { movieId } = req.params
             const idMovie = await Promise.resolve(moviesServices.deleteMovie({ movieId }))
