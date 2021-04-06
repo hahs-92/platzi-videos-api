@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 const config = {
-    dev: process.env.NODE_ENV !== 'production',
+    dev: process.env.NODE_ENV.trim() !== 'production',
     port: process.env.NODE_PORT || 3006,
 
     //CONFIG

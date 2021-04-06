@@ -15,6 +15,7 @@ function moviesApi(app) {
 
     router.get("/", async (req, res, next) => {
         try {
+            throw new Error(chalk.yellow("[ERROR GETALL]"))
             const { tags } = req.query
             // const movies = await Promise.resolve(moviesServices.getMovies({ tags }))
             const movies = await moviesServices.getMovies({ tags })
@@ -24,7 +25,8 @@ function moviesApi(app) {
                 message: 'movies listed'
             })
         } catch (error) {
-            console.error(chalk.red("[routes/movies] ", error.message))
+            console.error(chalk.red("[ROUTES-MOVIES] ", error))
+            next(error)
         }
     })
 
@@ -39,6 +41,7 @@ function moviesApi(app) {
             })
         } catch (error) {
             console.error(chalk.red("[routes/movies] ", error.message))
+            next(error)
         }
     })
 
@@ -53,6 +56,7 @@ function moviesApi(app) {
             })
         } catch (error) {
             console.error(chalk.red("[routes/movies] ", error.message))
+            next(error)
         }
     })
 
@@ -71,6 +75,7 @@ function moviesApi(app) {
             })
         } catch (error) {
             console.error(chalk.red("[routes/movies] ", error.message))
+            next(error)
         }
     })
     
@@ -89,6 +94,7 @@ function moviesApi(app) {
             })
         } catch (error) {
             console.error(chalk.red("[routes/movies] ", error.message))
+            next(error)
         }
     })
 
@@ -103,6 +109,7 @@ function moviesApi(app) {
             })
         } catch (error) {
             console.error(chalk.red("[routes/movies] ", error.message))
+            next(error)
         }
     })
 }
