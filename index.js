@@ -7,6 +7,10 @@ const moviesApi = require('./routes/movies')
 // ____________________________________________________________________________________________
 
 const app = express()
+
+//MIDDLEWARE PARA RECIBIR JSON
+app.use(express.json())
+
 moviesApi(app)
 
 const { config } = require('./config')

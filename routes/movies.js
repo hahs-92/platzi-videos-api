@@ -16,7 +16,8 @@ function moviesApi(app) {
     router.get("/", async (req, res, next) => {
         try {
             const { tags } = req.query
-            const movies = await Promise.resolve(moviesServices.getMovies({ tags }))
+            // const movies = await Promise.resolve(moviesServices.getMovies({ tags }))
+            const movies = await moviesServices.getMovies({ tags })
 
             res.status(200).json({
                 data: movies,
@@ -27,11 +28,11 @@ function moviesApi(app) {
         }
     })
 
-    router.get("/:moviedId", async (req, res, next) => {
+    router.get("/:movieId", async (req, res, next) => {
         try {
             const { movieId } = req.params
-            const movies = await Promise.resolve(moviesServices.getMovies({ movieId }))
-
+            // const movies = await Promise.resolve(moviesServices.getMovie({ movieId }))
+            const movies = await moviesServices.getMovie({ movieId })
             res.status(200).json({
                 data: movies,
                 message: 'movies retrieve'

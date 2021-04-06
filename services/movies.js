@@ -1,52 +1,59 @@
 //LOGICA DE NEGOCIOS
 //CAPA DE NEGOCIOS
 const chalk = require('chalk')
-const { moviesMock } = require('../utils/mocks/movies')
+
+//MOCKS = YA NO ES NECESARIO XQ AHORA NOS CONECAMOS CON NUESTRA BASE DE DATOS
+// const { moviesMock } = require('../utils/mocks/movies')
+
+//LIB/MONGOO
+const MongoLib = require('../lib/mongo')
 
 class MoviesService {
     constructor() {
-
+        this.collection = 'movies'
+        this.mongoDB = new MongoLib()
     }
 
-    async getMovies() {
+    async getMovies({ tags }) {
         try {
-            const movies = await Promise.resolve(moviesMock)
+            const query = tags && { tags: { $in: tags } }
+            const movies = await this.mongoDB.getAll(this.collection, query)
             return movies || []
         } catch (error) {
             console.error(chalk.red("[service/movies]: ", error))
         }
     }
 
-    async getMovie() {
+    async getMovie({ movieId }) {
         try {
-            const movie = await Promise.resolve(moviesMock[0])
+            const movie = await this.mongoDB.get(this.collection, movieId)
             return movie || []
         } catch (error) {
             console.error(chalk.red("[service/movies]: ", error))
         }
     }
 
-    async createMovie() {
+    async createMovie({ movie }) {
         try {
-            const idMovie = await Promise.resolve(moviesMock[0].id)
+            const idMovie = await this.mongoDB.create(this.collection, movie )
             return idMovie || []
         } catch (error) {
             console.error(chalk.red("[service/movies]: ", error))
         }
     }
     //falta el metodo pacth
-    async updateMovie() {
+    async updateMovie({ movieId, movie } = {} ) {
         try {
-            const idMovie = await Promise.resolve(moviesMock[0].id)
+            const idMovie = await this.mongoDB.update(this.collection, movieId, movie)
             return idMovie || []
         } catch (error) {
             console.error(chalk.red("[service/movies]: ", error))
         }
     }
 
-    async deleteMovie() {
+    async deleteMovie({ movieId }) {
         try {
-            const idMovie = await Promise.resolve(moviesMock[0].id)
+            const idMovie = await this.mongoDB.delete(this.collection, movieId)
             return idMovie || []
         } catch (error) {
             console.error(chalk.red("[service/movies]: ", error))
