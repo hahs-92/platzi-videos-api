@@ -13,6 +13,7 @@ const notFoundHandler = require('./utils/middlewares/notFoundHandler')
 
 //ROUTES
 const moviesApi = require('./routes/movies')
+const userMoviesApi = require('./routes/userMovies')
 
 // ____________________________________________________________________________________________
 
@@ -27,6 +28,8 @@ app.use(helmet())
 
 //ROUTES
 moviesApi(app)
+userMoviesApi(app)
+
 //CATCH ERROR 404
 app.use(notFoundHandler)
 

@@ -7,7 +7,7 @@ const UserMoviesService = require('../services/userMovies')
 const validationHandler = require('../utils/middlewares/validateHandler')
 //SCHEMAS
 const  { movieIdSchema } = require('../utils/schema/movies')
-const  { userIdSchema } = require('../utils/schema/users')
+const  { userIdSchema, createUserSchema } = require('../utils/schema/users')
 const  {createUserMovieSchema } = require('../utils/schema/userMovies')
 
 //DEFINE LAS RUTAS PARA USER
@@ -31,4 +31,36 @@ function userMoviesApi(app) {
             next(error)
         }
     })
+
+    router.post('/', validationHandler( createUserMovieSchema ), async (req, res, next) => {
+        try {
+            const { body: userMovie } = req.query
+            const createdUserMovied = await userMoviesService.createUserMovies({
+                userMovie
+            })
+            res.status(201).json({
+                data: createdUserMovied,
+                message: 'user movies Created'
+            })
+        } catch (error) {
+            console.error(chalk("[ROUTES/USER/POST] :", error ))
+            next(error)
+        }
+    })
+
+    router.delete('/:userMovieId', validationHandler( { userMovieId: movieIdSchema }, 'params'), async (req, res, next) => {
+        try {
+            const { userMovieId } = req.params
+            const deletedUserMovieId = await userMoviesService.deleteUserMovies({ userMovieId })
+            res.status(200).json({
+                data: deletedUserMovieId,
+                message: 'user movies Deleted'
+            })
+        } catch (error) {
+            console.error(chalk("[ROUTES/USER/DELETED] :", error ))
+            next(error)
+        }
+    })
 }
+
+module.exports = userMoviesApi
