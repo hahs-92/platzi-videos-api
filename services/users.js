@@ -11,7 +11,7 @@ class UserService {
 
     async getUser({ email } ) {
         try {
-            const [ user ] = await this.MongoDB.get(this.collection, { email })
+            const [ user ] = await this.MongoDB.getAll(this.collection, { email })
             return user
         } catch (error) {
             console.error(chalk.red("[GETUSERS]: ", error.message))
