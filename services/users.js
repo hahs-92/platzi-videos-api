@@ -40,6 +40,16 @@ class UserService {
             console.error(chalk.red("[CREATEUSERS]: ", error.message))
         }
     }
+
+    //FUNCION PARA QUE VERIFIQUE SI YA EXISTE UN USUARIO 
+    async verifyUserExist({ email }) {
+        try {
+            const [ user ] = await this.MongoDB.getAll(this.collection, { email })
+            return user
+        } catch (error) {
+            console.error(error)
+        }
+    }
 }
 
 module.exports = UserService
