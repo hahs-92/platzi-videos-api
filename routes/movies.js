@@ -2,7 +2,7 @@ const express = require('express')
 const passport = require('passport')
 const chalk = require('chalk')
 
-const { moviesMock } = require('../utils/mocks/movies')
+// const { moviesMock } = require('../utils/mocks/movies')
 
 //NOS COMUNICAMOS CON LA,CAPA DE SERVICIO
 const MoviesService = require('../services/movies')
@@ -15,6 +15,17 @@ const { FIVE_MINUTES_IN_SECONDS, SYXTY_MINUTES_IN_SECONDS } = require('../utils/
 //ESTRATEGIA JWT
 require('../utils/auth/strategies/jwt')
 
+//SCHEMAS
+const {
+    movieIdSchema,
+    createMovieSchema,
+    updateMovieSchema
+} = require('../utils/schema/movies')
+
+//VALIDATIONS
+const validationHandler = require('../utils/middlewares/validateHandler')
+const scopeValidationHandler = require('../utils/middlewares/scopesValidationHandler')
+
 // ________________________________________________________________________________________
 
 function moviesApi(app) {
@@ -24,18 +35,8 @@ function moviesApi(app) {
     //INSTANCIAMOS LA CLASE MOVIESERVICES 
     const moviesServices = new MoviesService()
 
-    //SCHEMAS
-    const {
-        movieIdSchema,
-        createMovieSchema,
-        updateMovieSchema
-    } = require('../utils/schema/movies')
 
-    //VALIDATIONS
-    const validationHandler = require('../utils/middlewares/validateHandler')
-
-
-    router.get("/",  async (req, res, next) => {
+    router.get("/", scopeValidationHandler([ 'read: movies ']), async (req, res, next) => {
         try {
             cacheResponse(res, FIVE_MINUTES_IN_SECONDS)
             // throw new Error(chalk.yellow("[ERROR GETALL]"))
@@ -53,7 +54,7 @@ function moviesApi(app) {
         }
     })
 
-    router.get("/:movieId", validationHandler({ movieId: movieIdSchema }, 'params'), async (req, res, next) => {
+    router.get("/:movieId", scopeValidationHandler([ 'read: movies ']), validationHandler({ movieId: movieIdSchema }, 'params'), async (req, res, next) => {
         try {
             cacheResponse(res, SYXTY_MINUTES_IN_SECONDS)
             const { movieId } = req.params
@@ -69,7 +70,7 @@ function moviesApi(app) {
         }
     })
 
-    router.post("/", validationHandler(createMovieSchema), async (req, res, next) => {
+    router.post("/", scopeValidationHandler([ 'create: movies ']), validationHandler(createMovieSchema), async (req, res, next) => {
         try {
             const { body: movie } = req
             // const idMovie = await Promise.resolve(moviesServices.createMovie({ movie }))
@@ -85,7 +86,11 @@ function moviesApi(app) {
         }
     })
 
-    router.put("/:movieId",validationHandler({ movieId: movieIdSchema }, 'params'), validationHandler(updateMovieSchema), async (req, res, next) => {
+    router.put("/:movieId",
+    scopeValidationHandler([ 'updates: movies ']),
+    validationHandler({ movieId: movieIdSchema }, 'params'),
+    validationHandler(updateMovieSchema), async (req, res, next) => {
+        
         try {
             const { movieId } = req.params
             const { body: movie } = req
@@ -103,7 +108,8 @@ function moviesApi(app) {
             next(error)
         }
     })
-    
+
+    //NO IMPLEMENTADO
     router.patch("/:movieId", validationHandler({ movieId: movieIdSchema }, 'params'), validationHandler(updateMovieSchema), async (req, res, next) => {
         try {
             const { movieId } = req.params
@@ -123,7 +129,7 @@ function moviesApi(app) {
         }
     })
 
-    router.delete("/:movieId", validationHandler({ movieId: movieIdSchema }, 'params'), async (req, res, next) => {
+    router.delete("/:movieId", scopeValidationHandler([ 'delete: movies ']), validationHandler({ movieId: movieIdSchema }, 'params'), async (req, res, next) => {
         try {
             const { movieId } = req.params
             const idMovie = moviesServices.deleteMovie({ movieId })

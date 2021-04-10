@@ -7,8 +7,11 @@ require('../utils/auth/strategies/jwt')
 
 //SERVICE
 const UserMoviesService = require('../services/userMovies')
+
 //VALIDATION UTILS
 const validationHandler = require('../utils/middlewares/validateHandler')
+const scopeValidationHandler = require('../utils/middlewares/scopesValidationHandler')
+
 //SCHEMAS
 const  { movieIdSchema } = require('../utils/schema/movies')
 const  { userIdSchema, createUserSchema } = require('../utils/schema/users')
@@ -22,7 +25,7 @@ function userMoviesApi(app) {
     const userMoviesService = new UserMoviesService()
 
     //ROUTES
-    router.get('/', validationHandler( { userId: userIdSchema}, 'query'), async (req, res, next) => {
+    router.get('/', scopeValidationHandler([ 'read: user-movies ']), validationHandler( { userId: userIdSchema}, 'query'), async (req, res, next) => {
         try {
             const { userId } = req.query
             const userMovies = await userMoviesService.getUserMovies({ userId })
@@ -36,7 +39,7 @@ function userMoviesApi(app) {
         }
     })
 
-    router.post('/', validationHandler( createUserMovieSchema ), async (req, res, next) => {
+    router.post('/', scopeValidationHandler([ 'create: user-movies ']),validationHandler( createUserMovieSchema ), async (req, res, next) => {
         try {
             const { body: userMovie } = req.query
             const createdUserMovied = await userMoviesService.createUserMovies({
@@ -52,7 +55,7 @@ function userMoviesApi(app) {
         }
     })
 
-    router.delete('/:userMovieId', validationHandler( { userMovieId: movieIdSchema }, 'params'), async (req, res, next) => {
+    router.delete('/:userMovieId', scopeValidationHandler([ 'delete: user-movies ']),validationHandler( { userMovieId: movieIdSchema }, 'params'), async (req, res, next) => {
         try {
             const { userMovieId } = req.params
             const deletedUserMovieId = await userMoviesService.deleteUserMovies({ userMovieId })
