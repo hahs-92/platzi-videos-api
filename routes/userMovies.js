@@ -1,5 +1,9 @@
 const express = require('express')
+const passport = require('passport')
 const chalk = require('chalk')
+
+//ESTRATEGIA JWT
+require('../utils/auth/strategies/jwt')
 
 //SERVICE
 const UserMoviesService = require('../services/userMovies')
@@ -13,7 +17,7 @@ const  {createUserMovieSchema } = require('../utils/schema/userMovies')
 //DEFINE LAS RUTAS PARA USER
 function userMoviesApi(app) {
     const router = express.Router()
-    app.use('/api/user-movies', router)
+    app.use('/api/user-movies', passport.authenticate('jwt', { session: false }), router)
 
     const userMoviesService = new UserMoviesService()
 

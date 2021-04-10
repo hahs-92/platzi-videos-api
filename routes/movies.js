@@ -1,4 +1,5 @@
 const express = require('express')
+const passport = require('passport')
 const chalk = require('chalk')
 
 const { moviesMock } = require('../utils/mocks/movies')
@@ -9,12 +10,16 @@ const MoviesService = require('../services/movies')
 //CACHERESPONSE
 const cacheResponse = require('../utils/chacheResponse')
 const { FIVE_MINUTES_IN_SECONDS, SYXTY_MINUTES_IN_SECONDS } = require('../utils/times')
+// const passport = require('passport')
+
+//ESTRATEGIA JWT
+require('../utils/auth/strategies/jwt')
 
 // ________________________________________________________________________________________
 
 function moviesApi(app) {
     const router = express.Router()
-    app.use("/api/movies", router)
+    app.use("/api/movies", passport.authenticate('jwt', { session: false }),router)
 
     //INSTANCIAMOS LA CLASE MOVIESERVICES 
     const moviesServices = new MoviesService()
@@ -30,7 +35,7 @@ function moviesApi(app) {
     const validationHandler = require('../utils/middlewares/validateHandler')
 
 
-    router.get("/", async (req, res, next) => {
+    router.get("/",  async (req, res, next) => {
         try {
             cacheResponse(res, FIVE_MINUTES_IN_SECONDS)
             // throw new Error(chalk.yellow("[ERROR GETALL]"))
