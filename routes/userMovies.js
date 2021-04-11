@@ -41,7 +41,9 @@ function userMoviesApi(app) {
 
     router.post('/', scopeValidationHandler([ 'create: user-movies ']),validationHandler( createUserMovieSchema ), async (req, res, next) => {
         try {
-            const { body: userMovie } = req.query
+            // const { body: userMovie } = req.query
+            const { body: userMovie } = req
+            console.log(chalk.blue("[ROUTES-DATA]: ", userMovie))
             const createdUserMovied = await userMoviesService.createUserMovies({
                 userMovie
             })
@@ -63,6 +65,7 @@ function userMoviesApi(app) {
                 data: deletedUserMovieId,
                 message: 'user movies Deleted'
             })
+            // console.log(chalk.blue("[ROUTES-DATA-DELETE]: ", deletedUserMovieId))
         } catch (error) {
             console.error(chalk("[ROUTES/USER/DELETED] :", error ))
             next(error)

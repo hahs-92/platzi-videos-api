@@ -38,6 +38,7 @@ function moviesApi(app) {
 
     router.get("/", scopeValidationHandler([ 'read: movies ']), async (req, res, next) => {
         try {
+            // console.log("[get/movies:] ", req.user) // payload
             cacheResponse(res, FIVE_MINUTES_IN_SECONDS)
             // throw new Error(chalk.yellow("[ERROR GETALL]"))
             const { tags } = req.query

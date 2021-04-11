@@ -34,6 +34,7 @@ function authApi(app) {
             if(!apiKeyToken) next(boom.unauthorized('apiKeyToken is required'))
 
             passport.authenticate('basic', (error, user) => {
+                // console.log("[user:] ", user)
                 try {
                     if(error || !user) next(boom.unauthorized())
                     req.login(user, { session: false }, async (error) => { //login es un metodo de passport.js

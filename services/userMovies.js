@@ -20,18 +20,20 @@ class UserMoviesService {
     }
 
     async createUserMovies({ userMovie }) {
+        console.log(chalk.blue("[SERVICE-DATA:] ", userMovie ))
         try {
             const createdUserMovieId = await this.mongoDB.create(this.collection, userMovie)
             return createdUserMovieId
-        } catch (error) {
+        } catch (error) { 
             console.error(chalk.red("[SERVICE/CREATEUSERMOVIES]: ", error))
         }
     }
 
     async deleteUserMovies({ userMovieId }) {
         try {
-            const deleteUserMovieId = await this.mongoDB.delete(this.collection, userMovieId)
-            return deleteUserMovieId
+            const deletedUserMovieId = await this.mongoDB.delete(this.collection, userMovieId)
+            // console.log(chalk.blue("[SERVICES-DATA-DELETE]: ", deletedUserMovieId))
+            return deletedUserMovieId
         } catch (error) {
             console.error(chalk.red("[SERVICE/GETUSERMOVIES]: ", error))
         }
