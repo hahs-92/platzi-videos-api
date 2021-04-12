@@ -50,7 +50,7 @@ class UserService {
             console.error(error)
         }
     }
-
+ 
     //IMPLEMENTANDO SIGN PROVIDER
     async getOrCreateUser({ user }) {
         try {
