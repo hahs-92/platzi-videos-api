@@ -50,6 +50,20 @@ class UserService {
             console.error(error)
         }
     }
+
+    //IMPLEMENTANDO SIGN PROVIDER
+    async getOrCreateUser({ user }) {
+        try {
+            const queriedUser = await this.getUser({ email: user.email })
+    
+            if(queriedUser) return queriedUser
+    
+            await this.createUser({ user })
+            return await this.getUser({ email: user.email })
+        } catch (error) {
+            console.error(error)
+        }
+    }
 }
 
 module.exports = UserService
