@@ -43,7 +43,7 @@ function userMoviesApi(app) {
         try {
             // const { body: userMovie } = req.query
             const { body: userMovie } = req
-            console.log(chalk.blue("[ROUTES-DATA]: ", userMovie))
+            // console.log(chalk.blue("[ROUTES-DATA]: ", userMovie))
             const createdUserMovied = await userMoviesService.createUserMovies({
                 userMovie
             })

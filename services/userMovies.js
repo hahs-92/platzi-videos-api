@@ -20,7 +20,7 @@ class UserMoviesService {
     }
 
     async createUserMovies({ userMovie }) {
-        console.log(chalk.blue("[SERVICE-DATA:] ", userMovie ))
+        // console.log(chalk.blue("[SERVICE-DATA:] ", userMovie ))
         try {
             const createdUserMovieId = await this.mongoDB.create(this.collection, userMovie)
             return createdUserMovieId

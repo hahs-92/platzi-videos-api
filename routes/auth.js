@@ -94,7 +94,7 @@ function authApi(app) {
 
     router.post('/sign-provider', validationHandler(createProviderUserSchema), async (req, res, next) => {
         const { body } = req
-        const { apiKeyToken,  ...user } =body
+        const { apiKeyToken,  ...user } = body
 
         if(!apiKeyToken) next(boom.unauthorized('apiKeyToken is requerido'))
 
